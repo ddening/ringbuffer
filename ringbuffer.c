@@ -27,7 +27,6 @@ uint8_t queue_full(queue_t* queue) {
 uint8_t queue_enqueue(queue_t* queue, payload_t* payload) {
 
     if (queue_full(queue)) {
-        printf("Queue is full, can't enqueue.\n");
         return 1;
     }
 
@@ -46,7 +45,6 @@ uint8_t queue_enqueue(queue_t* queue, payload_t* payload) {
 payload_t* queue_dequeue(queue_t* queue) {
 
     if (queue_empty(queue)) {
-        printf("Queue is empty, can't dequeue.\n");
         return NULL;
     }
 
