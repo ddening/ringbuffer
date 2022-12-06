@@ -391,3 +391,6 @@ _ReSharper*/
 *.vssscc
 $tf*/
 .DS_Store
+*.filters
+*.sln
+*.vcxproj
