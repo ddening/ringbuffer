@@ -10,11 +10,11 @@
 static void test_empty(queue_t* queue);
 static void test_data(queue_t* queue);
 
+queue_t q;
 queue_t* queue = NULL;
 
 void test_queue() {
-
-    queue_t q;
+  
     queue = queue_init(&q);
 
     test_empty(queue);
