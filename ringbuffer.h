@@ -8,7 +8,6 @@
 
 typedef struct payload_t payload_t;
 
-// Define the queue structure
 typedef struct queue_t {
     uint8_t head;
     uint8_t tail;

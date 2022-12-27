@@ -85,12 +85,12 @@ static void test_data(queue_t* queue) {
         queue_enqueue(queue, payload[i]);
     }
 
-    payload_t* _payloud;
+    payload_t* _payload;
 
     for (int i = 0; i < DATA_ARR_SIZE; i++) {
-        _payloud = queue_dequeue(queue);
-        printf("Payload: %i, Priority: %i\n", (int)*(_payloud->spi->data), _payloud->priority);
-        assert((int)*(_payloud->spi->data) == data_sequence_expected[i]);
+        _payload = queue_dequeue(queue);
+        printf("Payload: %i, Priority: %i\n", (int)*(_payload->protocol.spi.data), _payload->priority);
+        assert((int)*(_payload->protocol.spi.data) == data_sequence_expected[i]);
     }
 
     assert(queue_empty(queue) == 1);
