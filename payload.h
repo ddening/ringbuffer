@@ -24,7 +24,7 @@ typedef struct device_t device_t;
 
 typedef struct spi_payload_t {
     device_t* device;
-    const uint8_t* data;
+    uint8_t* data;
     uint8_t number_of_bytes;
     callback_fn* callback;
     uint8_t* container;
