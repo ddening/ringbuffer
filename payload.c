@@ -30,13 +30,15 @@ payload_t* payload_create_i2c(priority_t priority, device_t* device, uint8_t* da
 
     payload_t* payload = (payload_t*)malloc(sizeof(payload_t));
 
-    if (payload == NULL) {
+    uint8_t* _data = (uint8_t*)malloc(sizeof(uint8_t) * number_of_bytes);
+
+    if (payload == NULL || _data == NULL) {
         return NULL;
     }
 
     payload->priority = priority;
     payload->protocol.i2c.device = device;
-    payload->protocol.i2c.data = data;
+    payload->protocol.i2c.data = _data;
     payload->protocol.i2c.number_of_bytes = number_of_bytes;
     payload->protocol.i2c.callback = callback;
 
@@ -45,5 +47,10 @@ payload_t* payload_create_i2c(priority_t priority, device_t* device, uint8_t* da
 
 void payload_free_spi(payload_t* payload) {
     free(payload->protocol.spi.data);
+    free(payload);
+}
+
+void payload_free_i2c(payload_t* payload) {
+    free(payload->protocol.i2c.data);
     free(payload);
 }
