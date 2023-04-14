@@ -1,7 +1,7 @@
 /* User defined libraries */
 #include "payload.h"
 
-payload_t* payload_create_spi(priority_t priority, device_t* device, uint8_t* data, uint8_t number_of_bytes, callback_fn* callback) {
+payload_t* payload_create_spi(priority_t priority, device_t* device, uint8_t* data, uint8_t number_of_bytes, callback_fn callback) {
 
     payload_t* payload = (payload_t*)malloc(sizeof(payload_t));
 
@@ -26,7 +26,7 @@ payload_t* payload_create_spi(priority_t priority, device_t* device, uint8_t* da
     return payload;
 }
 
-payload_t* payload_create_i2c(priority_t priority, device_t* device, uint8_t* data, uint8_t number_of_bytes, callback_fn* callback) {
+payload_t* payload_create_i2c(priority_t priority, device_t* device, uint8_t* data, uint8_t number_of_bytes, callback_fn callback) {
 
     payload_t* payload = (payload_t*)malloc(sizeof(payload_t));
 
