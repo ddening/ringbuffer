@@ -12,7 +12,7 @@ payload_t* payload_create_spi(priority_t priority, device_t* device, uint8_t* da
     }
 
     for (uint8_t i = 0; i < number_of_bytes; i++) {
-        _data[i] = data[i];
+        _data[i] = data[i];     
     }
 
     payload->priority = priority;
