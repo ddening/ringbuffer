@@ -18,24 +18,25 @@ typedef enum read_write_t {
     READ_WRITE
 } read_write_t;
 
-typedef void (callback_fn)(void);
+typedef void (*callback_fn)(void);
 
 typedef struct device_t device_t;
 
 typedef struct spi_payload_t {
     device_t* device;
-    uint8_t* data;
+    uint8_t** data;
+    uint8_t* data_addr; // required to restore pointer
     uint8_t number_of_bytes;  
     uint8_t* container;
     read_write_t mode;
-    callback_fn* callback;
+    callback_fn callback;
 } spi_payload_t;
 
 typedef struct i2c_payload_t {
     device_t* device;
-    uint8_t* data;
+    uint8_t** data;
     uint8_t number_of_bytes;
-    callback_fn* callback;
+    callback_fn callback;
 } i2c_payload_t;
 
 typedef struct payload_t {
@@ -46,7 +47,10 @@ typedef struct payload_t {
     } protocol;
 } payload_t;
 
-payload_t* payload_create_spi(priority_t priority, device_t* device, uint8_t* data, uint8_t number_of_bytes, callback_fn* callback);
-payload_t* payload_create_i2c(priority_t priority, device_t* device, uint8_t* data, uint8_t number_of_bytes, callback_fn* callback);
+payload_t* payload_create_spi(priority_t priority, device_t* device, uint8_t* data, uint8_t number_of_bytes, callback_fn callback);
+payload_t* payload_create_i2c(priority_t priority, device_t* device, uint8_t* data, uint8_t number_of_bytes, callback_fn callback);
+
+void payload_free_spi(payload_t* payload);
+void payload_free_i2c(payload_t* payload);
 
 #endif /* PAYLOAD_H_ */
