@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "payload.h"
 
-#define QUEUE_SIZE 100
+#define QUEUE_SIZE 500
 
 typedef struct payload_t payload_t;
 
