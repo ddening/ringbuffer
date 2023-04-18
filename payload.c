@@ -1,3 +1,18 @@
+/*************************************************************************
+* Title     : payload.c
+* Author    : Dimitri Dening
+* Created   : 06.12.2022    
+* Software  : Microchip Studio V7
+* Hardware  : Atmega2560
+        
+DESCRIPTION:
+    Payload definitions for different communication protocols.
+USAGE:
+    see <payload.h>
+NOTES:
+                       
+*************************************************************************/
+
 /* User defined libraries */
 #include "payload.h"
 
@@ -12,7 +27,8 @@ payload_t* payload_create_spi(priority_t priority, device_t* device, uint8_t* da
     }
 
     for (uint8_t i = 0; i < number_of_bytes; i++) {
-        _data[i] = data[i];
+        _data[i] = data[i];     
+
     }
 
     payload->priority = priority;

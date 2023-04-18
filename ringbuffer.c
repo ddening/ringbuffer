@@ -1,3 +1,18 @@
+/*************************************************************************
+* Title     : ringbuffer.c
+* Author    : Dimitri Dening
+* Created   : 06.12.2022    
+* Software  : Microchip Studio V7
+* Hardware  : Atmega2560
+        
+DESCRIPTION:
+    Ringbuffer with priority handling.
+USAGE:
+    see <ringbuffer.h>
+NOTES:
+                       
+*************************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "ringbuffer.h"
