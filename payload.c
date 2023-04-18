@@ -1,3 +1,18 @@
+/*************************************************************************
+* Title     : payload.c
+* Author    : Dimitri Dening
+* Created   : 06.12.2022    
+* Software  : Microchip Studio V7
+* Hardware  : Atmega2560
+        
+DESCRIPTION:
+    Payload definitions for different communication protocols.
+USAGE:
+    see <payload.h>
+NOTES:
+                       
+*************************************************************************/
+
 /* User defined libraries */
 #include "payload.h"
 
