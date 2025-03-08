@@ -68,6 +68,7 @@ typedef struct i2c_payload_t {
     uint8_t* data;
     uint8_t* data_addr;
     uint8_t number_of_bytes;
+	read_write_t mode;
     callback_fn callback;
 } i2c_payload_t;
 
