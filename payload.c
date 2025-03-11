@@ -69,6 +69,20 @@ payload_t* payload_create_i2c(priority_t priority, device_t* device, uint8_t* da
     return payload;
 }
 
+payload_t* payload_create_hd44780(priority_t priority, uint8_t opcode, uint8_t instruction) {
+	
+	payload_t* payload = (payload_t*)malloc(sizeof(payload_t));
+	
+	if (payload == NULL) {
+		return NULL;
+	}
+	
+	payload->protocol.hd44780.opcode = opcode;
+	payload->protocol.hd44780.instruction = instruction;
+	
+	return payload;
+}
+
 void payload_free_spi(payload_t* payload) {
     /* Pointer of data is always shifted when next bit is sent, therefore 
     free(payload->protocol.spi.data) no longer refers to the starting point of data.
@@ -84,4 +98,8 @@ void payload_free_spi(payload_t* payload) {
 void payload_free_i2c(payload_t* payload) {
     free(payload->protocol.i2c.data_addr);
     free(payload);
+}
+
+void payload_free_hd44780(payload_t* payload) {
+	free(payload);
 }
