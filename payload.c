@@ -61,7 +61,7 @@ payload_t* payload_create_i2c(priority_t priority, device_t* device, uint8_t* da
     payload->priority = priority;
     payload->i2c.device = device;
     payload->i2c.data = _data;
-	payload->spi.data_addr = _data;
+	payload->i2c.data_addr = _data;
     payload->i2c.number_of_bytes = number_of_bytes;
     payload->i2c.mode = -1;
     payload->i2c.callback = callback;
