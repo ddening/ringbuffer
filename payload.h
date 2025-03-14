@@ -56,7 +56,7 @@ typedef enum read_write_t {
 typedef struct spi_payload_t {
     device_t* device;
     uint8_t* data;
-    uint8_t* data_addr; // required to restore pointer
+    uint8_t* data_addr; // required to free data
     uint8_t number_of_bytes;  
     uint8_t* container;
     read_write_t mode;
@@ -66,7 +66,7 @@ typedef struct spi_payload_t {
 typedef struct i2c_payload_t {
     device_t* device;
     uint8_t* data;
-    uint8_t* data_addr;
+	uint8_t* data_addr; // required to free data
     uint8_t number_of_bytes;
 	read_write_t mode;
     callback_fn callback;
@@ -79,11 +79,9 @@ typedef struct hd44780_payload_t {
 
 typedef struct payload_t {
     priority_t priority;
-    union {
-        spi_payload_t spi;
-        i2c_payload_t i2c;
-		hd44780_payload_t hd44780;
-    } protocol;
+	spi_payload_t spi;
+	i2c_payload_t i2c;
+	hd44780_payload_t hd44780;
 } payload_t;
 
 payload_t* payload_create_spi(priority_t priority, device_t* device, uint8_t* data, uint8_t number_of_bytes, callback_fn callback);

@@ -44,7 +44,7 @@ uint8_t queue_enqueue(queue_t* queue, payload_t* payload) {
     if (queue_full(queue)) {
         return 1;
     }
-
+	
     // Add the item to the queue in the correct position according to its priority
     int i = queue->tail;
     while (i > queue->head && queue->payload[i-1]->priority < payload->priority) {
