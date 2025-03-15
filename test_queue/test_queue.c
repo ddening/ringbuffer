@@ -89,8 +89,8 @@ static void test_data(queue_t* queue) {
 
     for (int i = 0; i < DATA_ARR_SIZE; i++) {
         _payload = queue_dequeue(queue);
-        printf("Payload: %i, Priority: %i\n", (int)*(_payload->protocol.spi.data), _payload->priority);
-        assert((int)*(_payload->protocol.spi.data) == data_sequence_expected[i]);
+        printf("Payload: %i, Priority: %i\n", (int)*(_payload->spi.data), _payload->priority);
+        assert((int)*(_payload->spi.data) == data_sequence_expected[i]);
     }
 
     assert(queue_empty(queue) == 1);

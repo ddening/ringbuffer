@@ -37,6 +37,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+typedef void (*callback_fn)(void* context);
+
+typedef struct device_t device_t;
+
 typedef enum priority_t {
     PRIORITY_LOW,
     PRIORITY_NORMAL,
@@ -49,14 +53,10 @@ typedef enum read_write_t {
     READ_WRITE
 } read_write_t;
 
-typedef void (*callback_fn)(void);
-
-typedef struct device_t device_t;
-
 typedef struct spi_payload_t {
     device_t* device;
     uint8_t* data;
-    uint8_t* data_addr; // required to restore pointer
+    uint8_t* data_addr; // required to free data
     uint8_t number_of_bytes;  
     uint8_t* container;
     read_write_t mode;
@@ -65,23 +65,31 @@ typedef struct spi_payload_t {
 
 typedef struct i2c_payload_t {
     device_t* device;
-    uint8_t** data;
+    uint8_t* data;
+	uint8_t* data_addr; // required to free data
     uint8_t number_of_bytes;
+	read_write_t mode;
     callback_fn callback;
 } i2c_payload_t;
 
+typedef struct hd44780_payload_t {
+	uint8_t opcode;
+	uint8_t instruction;
+} hd44780_payload_t;
+
 typedef struct payload_t {
     priority_t priority;
-    union {
-        spi_payload_t spi;
-        i2c_payload_t i2c;
-    } protocol;
+	spi_payload_t spi;
+	i2c_payload_t i2c;
+	hd44780_payload_t hd44780;
 } payload_t;
 
 payload_t* payload_create_spi(priority_t priority, device_t* device, uint8_t* data, uint8_t number_of_bytes, callback_fn callback);
 payload_t* payload_create_i2c(priority_t priority, device_t* device, uint8_t* data, uint8_t number_of_bytes, callback_fn callback);
+payload_t* payload_create_hd44780(priority_t priority, uint8_t opcode, uint8_t instruction);
 
 void payload_free_spi(payload_t* payload);
 void payload_free_i2c(payload_t* payload);
+void payload_free_hd44780(payload_t* payload);
 
 #endif /* PAYLOAD_H_ */

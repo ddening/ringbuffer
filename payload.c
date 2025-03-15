@@ -15,6 +15,7 @@ NOTES:
 
 /* User defined libraries */
 #include "payload.h"
+#include "memory.h"
 
 payload_t* payload_create_spi(priority_t priority, device_t* device, uint8_t* data, uint8_t number_of_bytes, callback_fn callback) {
 
@@ -32,13 +33,13 @@ payload_t* payload_create_spi(priority_t priority, device_t* device, uint8_t* da
     }
 
     payload->priority = priority;
-    payload->protocol.spi.device = device;
-    payload->protocol.spi.data = _data;
-    payload->protocol.spi.data_addr = _data;
-    payload->protocol.spi.number_of_bytes = number_of_bytes;
-    payload->protocol.spi.callback = callback;
-    payload->protocol.spi.container = NULL;
-    payload->protocol.spi.mode = -1;
+    payload->spi.device = device;
+    payload->spi.data = _data;
+    payload->spi.data_addr = _data;
+    payload->spi.number_of_bytes = number_of_bytes;
+    payload->spi.callback = callback;
+    payload->spi.container = NULL;
+    payload->spi.mode = -1;
 
     return payload;
 }
@@ -52,14 +53,35 @@ payload_t* payload_create_i2c(priority_t priority, device_t* device, uint8_t* da
     if (payload == NULL || _data == NULL) {
         return NULL;
     }
+    
+    for (uint8_t i = 0; i < number_of_bytes; i++) {
+        _data[i] = data[i];
+    }
 
     payload->priority = priority;
-    payload->protocol.i2c.device = device;
-    payload->protocol.i2c.data = _data;
-    payload->protocol.i2c.number_of_bytes = number_of_bytes;
-    payload->protocol.i2c.callback = callback;
+    payload->i2c.device = device;
+    payload->i2c.data = _data;
+	payload->i2c.data_addr = _data;
+    payload->i2c.number_of_bytes = number_of_bytes;
+    payload->i2c.mode = -1;
+    payload->i2c.callback = callback;
 
     return payload;
+}
+
+payload_t* payload_create_hd44780(priority_t priority, uint8_t opcode, uint8_t instruction) {
+	
+	payload_t* payload = (payload_t*)malloc(sizeof(payload_t));
+	
+	if (payload == NULL) {
+		return NULL;
+	}
+	
+	payload->priority = priority;
+	payload->hd44780.opcode = opcode;
+	payload->hd44780.instruction = instruction;
+	
+	return payload;
 }
 
 void payload_free_spi(payload_t* payload) {
@@ -70,11 +92,24 @@ void payload_free_spi(payload_t* payload) {
     Using number_of_bytes to restore the original address doesn't work, since we are using number_of_bytes to determine
     if the payload is empty by reducing it's value in each ISR occurence.
     */
-    free(payload->protocol.spi.data_addr);
+    free(payload->spi.data_addr);
     free(payload);
+	
+	payload->spi.data = NULL;
+	payload->spi.data_addr = NULL;
+	payload = NULL;
 }
 
 void payload_free_i2c(payload_t* payload) {
-    free(payload->protocol.i2c.data);
-    free(payload);
+	free(payload->i2c.data_addr);
+	free(payload);
+	
+	payload->i2c.data = NULL;
+	payload->i2c.data_addr = NULL;
+	payload = NULL;
+}
+
+void payload_free_hd44780(payload_t* payload) {
+	free(payload);
+	payload = NULL;
 }
