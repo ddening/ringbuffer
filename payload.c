@@ -94,13 +94,22 @@ void payload_free_spi(payload_t* payload) {
     */
     free(payload->spi.data_addr);
     free(payload);
+	
+	payload->spi.data = NULL;
+	payload->spi.data_addr = NULL;
+	payload = NULL;
 }
 
 void payload_free_i2c(payload_t* payload) {
 	free(payload->i2c.data_addr);
-    free(payload);
+	free(payload);
+	
+	payload->i2c.data = NULL;
+	payload->i2c.data_addr = NULL;
+	payload = NULL;
 }
 
 void payload_free_hd44780(payload_t* payload) {
 	free(payload);
+	payload = NULL;
 }
